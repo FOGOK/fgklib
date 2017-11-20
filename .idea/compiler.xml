@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="fgkio_main" target="1.8" />
+      <module name="fgkio_test" target="1.8" />
+      <module name="fgklib_main" target="1.8" />
+      <module name="fgklib_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
