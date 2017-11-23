@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgkio.iml" filepath="$PROJECT_DIR$/.idea/modules/fgkio.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgkio_main.iml" filepath="$PROJECT_DIR$/.idea/modules/fgkio_main.iml" group="fgkio" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgkio_test.iml" filepath="$PROJECT_DIR$/.idea/modules/fgkio_test.iml" group="fgkio" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgklib.iml" filepath="$PROJECT_DIR$/.idea/modules/fgklib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgklib_main.iml" filepath="$PROJECT_DIR$/.idea/modules/fgklib_main.iml" group="fgklib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fgklib_test.iml" filepath="$PROJECT_DIR$/.idea/modules/fgklib_test.iml" group="fgklib" />
+      <module fileurl="file://$PROJECT_DIR$/fgkio.iml" filepath="$PROJECT_DIR$/fgkio.iml" />
     </modules>
   </component>
 </project>

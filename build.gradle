@@ -1,14 +1,32 @@
-group 'fgklib'
-version '1.0'
+buildscript {
 
-apply plugin: 'java'
 
-sourceCompatibility = 1.8
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
 
-repositories {
-    mavenCentral()
+    }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+allprojects {
+    apply plugin: "java"
+    apply plugin: "idea"
+
+
+    ext {
+
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
 }
