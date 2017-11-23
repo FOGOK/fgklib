@@ -1,4 +1,4 @@
-package com.fogok.io.interfaces;
+package com.fogok.io.fsystem;
 
 import org.apache.commons.io.output.TeeOutputStream;
 
