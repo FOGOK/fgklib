@@ -1,9 +1,11 @@
 package com.fogok.io.fsystem;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import static com.fogok.io.logging.OurLogging.*;
+import static com.fogok.io.logging.OurLogging.debug;
 
 public class Files {
 
@@ -48,6 +50,14 @@ public class Files {
      */
     public File crwFileInternal(final String path, final String name) throws IOException {
         return crwFile(System.getProperty("user.dir") + File.separator + path, name);
+    }
+
+    public void clearFileContent(File file) throws IOException {
+        FileWriter fwOb = new FileWriter(file, false);
+        PrintWriter pwOb = new PrintWriter(fwOb, false);
+        pwOb.flush();
+        pwOb.close();
+        fwOb.close();
     }
 
 }

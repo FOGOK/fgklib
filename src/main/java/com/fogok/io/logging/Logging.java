@@ -32,8 +32,9 @@ public class Logging {
      * @param minlogLogLevel уровень логгирования
      * @param appName имя приложения, которое будет логгироваться
      * @param folderName имя папки (будет создана в текущем рабочем каталоге пользователя (чаще всего тот каталог, где расположен исполняемый файл вашей программы).
+     * @param debug если тру, имя файла будет $appName_ + "Debug"
      */
-    public void createLogSystem(int minlogLogLevel, final String appName, final String folderName) throws IOException {
+    public void createLogSystem(int minlogLogLevel, final String appName, final String folderName, boolean debug) throws IOException {
 
         if (isCreatedLogSystem)
             return;
@@ -63,11 +64,14 @@ public class Logging {
 
         Log.set(minlogLogLevel);
 
-        final String fullName = logName + "-" + appName +  "-" + new SimpleDateFormat("[MM-dd-yyyy][HH-mm-ss]").format(Calendar.getInstance().getTime()) + ".log";
+        final String fullName = !debug ? logName + "-" + appName +  "-" + new SimpleDateFormat("[MM-dd-yyyy][HH-mm-ss]").format(Calendar.getInstance().getTime()) + ".log" :
+                "debug_" + appName + ".log";
 
         File file = Fgkio.files.crwFileInternal(folderName, fullName);
 
         info("Log file will be save to " + file.getAbsolutePath());
+
+        if (debug) Fgkio.files.clearFileContent(file);
 
         //делаем так, чтобы лог выводился одновременно в файл и в консоль
         TeeOutputStream myOut = new TeeOutputStream(System.out, new FileOutputStream(file));    //вывод в два отдельных потока
