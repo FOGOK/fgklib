@@ -1,62 +1,53 @@
 package com.fogok.io.fsystem;
 
-import org.apache.commons.io.output.TeeOutputStream;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
-import static com.esotericsoftware.minlog.Log.*;
+import static com.fogok.io.logging.OurLogging.*;
 
 public class Files {
-    public File createOrRewriteFile(boolean absolute, final String path, String name) throws IOException {
-        String sep = File.separator;
 
-        String pathCorrect = !absolute ? System.getProperty("user.dir") + sep + path : path;
-
-        File file = new File(pathCorrect, name);
-        file.getParentFile().mkdirs();
-        file.createNewFile();
-
-        return file;
+    //region Singleton
+    private static Files files;
+    public static Files getInstance(){
+        if (files == null)
+            files = new Files();
+        return files;
     }
+    //endregion
 
-    public void createLogSystem(int minlogLogLevel, String folderName) throws IOException {
+    /**
+     * Создаём или берём нужный файл
+     * @param path путь к файлу
+     * @param name имя файла
+     * @return файл
+     */
+    public File crwFile(String path, String name) throws IOException {
 
-        final String name;
+        File file = null;
+        try {
+            file = new File(path, name);
+            if (file.getParentFile().mkdirs())
+                    debug("Missing folders created success");
+            if (file.createNewFile())
+                debug("Missing file created success");
 
-        switch (minlogLogLevel) {
-            case LEVEL_TRACE:
-                name = "trace";
-                break;
-            case LEVEL_DEBUG:
-                name = "debug";
-                break;
-            case LEVEL_INFO:
-                name = "info";
-                break;
-            case LEVEL_WARN:
-                name = "warn";
-                break;
-            case LEVEL_ERROR:
-                name = "error";
-                break;
-            default:
-                return;
+            debug(String.format("Create file success in %s path", file.getAbsolutePath()));
+            return file;
+
+        } catch (IOException e) {
+            throw new IOException(file.getAbsolutePath(), e.getCause());
         }
-
-        File file = createOrRewriteFile(false, folderName, name +
-                new SimpleDateFormat("[MM-dd-yyyy][HH-mm-ss]").format(Calendar.getInstance().getTime())
-                + ".log");
-
-        info("Log file will be save to " + file.getAbsolutePath());
-
-        FileOutputStream fos = new FileOutputStream(file);
-        TeeOutputStream myOut = new TeeOutputStream(System.out, fos);
-        PrintStream printStreamToFile = new PrintStream(myOut, true);
-        System.setOut(printStreamToFile);
     }
+
+    /**
+     * Создаём или берём нужный файл
+     * @param path путь к файлу относительно текущего рабочего каталога пользователя (чаще всего тот каталог, где расположен исполняемый файл вашей программы).
+     * @param name имя файла
+     * @return файл
+     */
+    public File crwFileInternal(final String path, final String name) throws IOException {
+        return crwFile(System.getProperty("user.dir") + File.separator + path, name);
+    }
+
 }

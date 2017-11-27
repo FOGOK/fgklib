@@ -1,3 +1,5 @@
+apply plugin: 'java-library'
+
 buildscript {
 
 
@@ -14,7 +16,6 @@ allprojects {
     apply plugin: "java"
     apply plugin: "idea"
 
-
     ext {
 
     }
@@ -28,5 +29,37 @@ allprojects {
 
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
+        testImplementation 'junit:junit:4.12'
     }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+}
+
+version = '0.1.0'
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+javadoc {
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('docencoding', 'UTF-8')
+    options.addStringOption('charset', 'UTF-8')
+    failOnError = false
 }
