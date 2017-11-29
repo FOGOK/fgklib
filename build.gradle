@@ -1,37 +1,22 @@
 apply plugin: 'java-library'
+apply plugin: "idea"
 
-buildscript {
+ext {
 
-
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-
-    }
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "idea"
-
-    ext {
-
-    }
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    }
-
-    dependencies {
-        compile fileTree(dir: 'libs', include: ['*.jar'])
-        testImplementation 'junit:junit:4.12'
-    }
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
 }
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+}
+
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

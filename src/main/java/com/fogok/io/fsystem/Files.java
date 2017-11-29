@@ -34,7 +34,7 @@ public class Files {
             if (file.createNewFile())
                 debug("Missing file created success");
 
-            debug(String.format("Create file success in %s path", file.getAbsolutePath()));
+            debug(String.format("Catch file success in %s path", file.getAbsolutePath()));
             return file;
 
         } catch (IOException e) {
