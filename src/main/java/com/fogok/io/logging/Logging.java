@@ -50,6 +50,15 @@ public class Logging {
          */
         private boolean debug = true;
 
+
+        private boolean isLogToConsole = false;
+
+
+        public LogSystemParams setLogToConsole(boolean logToConsole) {
+            isLogToConsole = logToConsole;
+            return this;
+        }
+
         public LogSystemParams setLogLevel(int logLevel) {
             this.logLevel = logLevel;
             return this;
@@ -91,7 +100,7 @@ public class Logging {
         Log.set(logSystemParams.logLevel);
         File file = createFile(logSystemParams);
         postProcessOnFile(logSystemParams, file);
-        createTeeOutputStream(file);
+        createTeeOutputStream(file, logSystemParams.isLogToConsole);
     }
 
     private File createFile(final LogSystemParams logSystemParams) throws IOException {
@@ -139,9 +148,19 @@ public class Logging {
     /**
      * Вывод файла в два отдельных потока
      */
-    private void createTeeOutputStream(File file) throws FileNotFoundException {
-        TeeOutputStream myOut = new TeeOutputStream(System.out, new FileOutputStream(file));
-        System.setOut(new PrintStream(myOut, true));
+    private void createTeeOutputStream(File file, boolean two) throws FileNotFoundException {
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            if (two) {
+                //we will want to print in standard "System.out" and in "file"
+                TeeOutputStream myOut = new TeeOutputStream(System.out, fos);
+                System.setOut(new PrintStream(myOut, true));
+            } else {
+                System.setOut(new PrintStream(fos, true));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
