@@ -130,7 +130,7 @@ public class Logging {
                 logName = "debug";
                 break;
             case LEVEL_INFO:
-                logName = "debug";
+                logName = "info";
                 break;
             case LEVEL_WARN:
                 logName = "warn";
